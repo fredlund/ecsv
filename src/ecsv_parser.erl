@@ -25,7 +25,7 @@
 % - This parser doesn't allow a return (\n) in a field value!
 %
 
--export([init/1, init/2, parse_with_character/2, end_parsing/1]).
+-export([init/1, init/2, init/3, parse_with_character/2, end_parsing/1]).
 
 -record(pstate, {
     state, % ready, in_quotes, skip_to_delimiter, eof

@@ -7,6 +7,7 @@
 
 -export([process_csv_file_with/2, process_csv_string_with/2]).
 -export([process_csv_file_with/3, process_csv_string_with/3]).
+-export([process_csv_file_with/4, process_csv_string_with/4]).
 
 %% @doc parse a csv file and process each parsed row with the RowFunction
 process_csv_file_with(IoDevice, RowFunction) ->
@@ -26,6 +27,18 @@ process_csv_file_with(IoDevice, RowFunction, RowFunctionInitState) ->
 %% and the initial state InitState
 process_csv_string_with(String, RowFunction, RowFunctionInitState) ->
     InitState = ecsv_parser:init(RowFunction, RowFunctionInitState),
+    stream_from_string(String, InitState).
+
+%% @doc parse a csv file and process each parsed row with the RowFunction
+%% and the initial state InitState, and options Options.
+process_csv_file_with(IoDevice, RowFunction, RowFunctionInitState,Options) ->
+    InitState = ecsv_parser:init(Options,RowFunction, RowFunctionInitState),
+    stream_from_file(IoDevice, InitState).
+
+%% @doc parse a csv string and process each parsed row with the RowFunction
+%% and the initial state InitState, and options Options.
+process_csv_string_with(String, RowFunction, RowFunctionInitState,Options) ->
+    InitState = ecsv_parser:init(Options,RowFunction, RowFunctionInitState),
     stream_from_string(String, InitState).
 
 % -----------------------------------------------------------------------------
